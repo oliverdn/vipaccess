@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Symantec VIP access</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+        body * {
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+        main {
+            background: black;
+            height: 200px;
+            padding: 15px;
+            width: 200px;
+        }
+        label {
+            background: linear-gradient(0deg, #000000, #777777);
+            display: block;
+            border: #DDDDDD solid 1px;
+            border-radius: 5%;
+            margin-bottom: 10px;
+            padding: 5px;
+        }
+        label span {
+            display: block;
+            color: #DDDDDD;
+            font-size: 12px;
+        }
+        input {
+            background: transparent;
+            border: none;
+            color: #FFBB33;
+            cursor: pointer;
+            font-family: Consolas, Helvetica;
+            width: 120px;
+        }
+        input#security {
+            font-size: 2.0em;
+        }
+        button {
+            width: calc(200px - 15px * 2);
+        }
+        .hide {
+            display: none;
+        }
+        .message {
+            color: #DDDDDD;
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <label title="Click to copy ID">
+            <span>Credential ID</span>
+            <input type="text" id="credential">
+        </label>
+        <label title="Click to copy code">
+            <span>Security Code</span>
+            <input type="text" id="security">
+        </label>
+        <div class="message hide"><em>SETUP: generating id...</em></div>
+    </main>
+    <script>
+        function generate() {
+            astilectron.sendMessage("generate", function(message) {
+                if (message == '') {
+                    document.querySelector('.message').classList.remove('hide')
+                } else {
+                    let values = message.split(',')
+                    document.querySelector('#credential').value = values[0];
+                    document.querySelector('#security').value = values[1];
+                    document.querySelector('.message').classList.add('hide')
+                }
+            });
+        }
+
+        setInterval(function() {
+            astilectron.sendMessage("ping", function(message) {
+                if (message != '') {
+                    let values = message.split(',')
+                    document.querySelector('#credential').value = values[0];
+                    document.querySelector('#security').value = values[1];
+                }
+            });
+        }, 15000);
+
+        document.addEventListener('astilectron-ready', function() {
+            astilectron.sendMessage("ping", function(message) {
+                if (message == '') {
+                    document.querySelector('.message').classList.remove('hide');
+                    generate();
+                } else {
+                    let values = message.split(',')
+                    document.querySelector('#credential').value = values[0];
+                    document.querySelector('#security').value = values[1];
+                }
+            });
+        });
+
+        document.querySelector('#credential').addEventListener('click', function(event) {
+            event.target.select();
+            document.execCommand('copy');
+        });
+        document.querySelector('#security').addEventListener('click', function(event) {
+            event.target.select();
+            document.execCommand('copy');
+        });
+    </script>
+</body>
+</html>
