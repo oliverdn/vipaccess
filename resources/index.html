@@ -65,6 +65,22 @@
         </label>
         <div class="message hide"><em>SETUP: generating id...</em></div>
     </main>
+    <script src="js/mespeak.js"></script>
+    <script>
+        meSpeak.loadVoice('../../voices/' + navigator.language.substring(0, 2) + '.json');
+
+        let reader;
+        function readOutDigit(number) {
+            let options = {speed: 125, variant: 'f5'};
+            if (typeof reader != 'undefined') {
+                clearInterval(reader);
+            }
+            meSpeak.speak(number.toString().split('').join('. '), options);
+            reader = setInterval( function() {
+                meSpeak.speak(number.toString().split('').join('. '), options);
+            }, 8000 );
+        }
+    </script>
     <script>
         function generate() {
             astilectron.sendMessage("generate", function(message) {
@@ -74,6 +90,7 @@
                     let values = message.split(',')
                     document.querySelector('#credential').value = values[0];
                     document.querySelector('#security').value = values[1];
+                    readOutDigit(values[1]);
                     document.querySelector('.message').classList.add('hide')
                 }
             });
@@ -85,6 +102,7 @@
                     let values = message.split(',')
                     document.querySelector('#credential').value = values[0];
                     document.querySelector('#security').value = values[1];
+                    readOutDigit(values[1]);
                 }
             });
         }, 15000);
@@ -98,6 +116,7 @@
                     let values = message.split(',')
                     document.querySelector('#credential').value = values[0];
                     document.querySelector('#security').value = values[1];
+                    readOutDigit(values[1]);
                 }
             });
         });

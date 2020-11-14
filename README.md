@@ -1,4 +1,4 @@
-# PSD2 born, accessibility suffers
+# OTP client with text-to-speech
 Electron UI of Symantec VIP Access app to get one time passwords.
 
 ![before after](https://i.imgur.com/qQNtIKV.png)
