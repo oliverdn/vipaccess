@@ -1,4 +1,4 @@
-module github.com/athomason/vipaccess-go
+module github.com/oliverdn/vipaccess
 
 go 1.15
 
