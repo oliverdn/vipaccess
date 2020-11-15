@@ -18,6 +18,6 @@ The program downloads electron files to AppData\Roaming directory.
 There is a generated ```key.txt``` file next to Symantec.exe executable, create a backup,  
 visit www.paypal.com/cgi-bin/webscr?cmd=_setup-security-key, register your new id.
 
-##Related:
+## Related:
 
 [vipaccess-go](https://github.com/athomason/vipaccess-go)
