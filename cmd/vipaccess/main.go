@@ -11,7 +11,7 @@ import (
 	"time"
 
 	"github.com/asticode/go-astilectron"
-	"github.com/athomason/vipaccess-go/vipaccess"
+	"github.com/oliverdn/vipaccess/vipaccess"
 )
 
 func main() {
@@ -68,7 +68,7 @@ func main() {
 				var _, errStat = os.Stat("key.txt")
 				if !os.IsNotExist(errStat) {
 					var line, errFile = ioutil.ReadFile("key.txt")
-					if (errFile == nil) {
+					if errFile == nil {
 						var accountName = ""
 						var issuer = ""
 						var secret = strings.Split(string(line), ",")[1]
